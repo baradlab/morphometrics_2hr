@@ -1,6 +1,6 @@
 # Surface Morphometrics in 2 Hours
 
-A condensed, single-page [Surface Morphometrics](https://github.com/grotjahnlab/surface_morphometrics) tutorial designed to run end-to-end in about two hours. It starts from a pre-made IMM/OMM mitochondrial segmentation from [EMPIAR-12534](https://www.ebi.ac.uk/empiar/EMPIAR-12534/) and walks through meshing, curvature, a shortened 2-iteration mesh refinement, inter-membrane distances, and thickness.
+A condensed, single-page [Surface Morphometrics](https://github.com/baradlab/surface_morphometrics) tutorial designed to run end-to-end in about two hours. It starts from a pre-made IMM/OMM mitochondrial segmentation from [EMPIAR-12534](https://www.ebi.ac.uk/empiar/EMPIAR-12534/) and walks through meshing, curvature, a shortened 2-iteration mesh refinement, inter-membrane distances, and thickness.
 
 **Live site:** <https://baradlab.com/morphometrics_2hr>
 

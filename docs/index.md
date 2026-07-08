@@ -1,10 +1,10 @@
 # Surface Morphometrics in 2 Hours
 
-![Workflow Figure](https://raw.githubusercontent.com/GrotjahnLab/surface_morphometrics/master/Workflow_title.png)
+![Workflow Figure](https://raw.githubusercontent.com/baradlab/surface_morphometrics/master/Workflow_title.png)
 
 ### Quantifying membrane ultrastructure from a single cryo-ET tomogram — start to finish in one sitting.
 
-[Surface Morphometrics](https://github.com/grotjahnlab/surface_morphometrics) is a toolbox for building high-quality triangle-mesh models of membranes segmented from cryo-ET (or other volumetric imaging) and using them to measure membrane geometry — curvature, inter-membrane distance and orientation, and bilayer thickness — both locally and globally.
+[Surface Morphometrics](https://github.com/baradlab/surface_morphometrics) is a toolbox for building high-quality triangle-mesh models of membranes segmented from cryo-ET (or other volumetric imaging) and using them to measure membrane geometry — curvature, inter-membrane distance and orientation, and bilayer thickness — both locally and globally.
 
 This is a **condensed, single-page** version of the [full U Michigan tutorial](https://baradlab.com/michigan_tutorial). It is designed to run end-to-end in about two hours on a real tomogram. We work with one mitochondrial tomogram from [EMPIAR-12534](https://www.ebi.ac.uk/empiar/EMPIAR-12534/) and its pre-made segmentation, which contains just two membranes — the **inner mitochondrial membrane (IMM)** and **outer mitochondrial membrane (OMM)**. Because there are only two surfaces and we keep the meshes a little coarse, every step finishes quickly.
 
@@ -31,14 +31,14 @@ This workflow works on Mac and most Linux distributions. If you have a windows P
 ### Surface Morphometrics (required)
 
 ```bash
-git clone https://github.com/grotjahnlab/surface_morphometrics.git
+git clone https://github.com/baradlab/surface_morphometrics.git
 cd surface_morphometrics
 conda env create -f environment.yml        # installs deps + the `morphometrics` command
 conda activate morphometrics
 morphometrics --help                        # should list the pipeline subcommands
 ```
 
-On older Ubuntu (or if `graph-tool` fails to solve), use `conda env create -f environment-ubuntu.yml` instead. There is also a Docker image — see the [repo README](https://github.com/grotjahnlab/surface_morphometrics#installation).
+On older Ubuntu (or if `graph-tool` fails to solve), use `conda env create -f environment-ubuntu.yml` instead. There is also a Docker image — see the [repo README](https://github.com/baradlab/surface_morphometrics#installation).
 
 ### Surforama (recommended, for the last step)
 

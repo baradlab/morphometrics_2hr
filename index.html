@@ -785,6 +785,12 @@ conda<span class="w"> </span>activate<span class="w"> </span>morphometrics
 morphometrics<span class="w"> </span>--help<span class="w">                        </span><span class="c1"># should list the pipeline subcommands</span>
 </code></pre></div>
 <p>On older Ubuntu (or if <code>graph-tool</code> fails to solve), use <code>conda env create -f environment-ubuntu.yml</code> instead. There is also a Docker image — see the <a href="https://github.com/baradlab/surface_morphometrics#installation">repo README</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">WSL users: fix git SSL first</p>
+<p>On Windows Subsystem for Linux, <code>git clone</code> over HTTPS can fail with SSL certificate errors. Point git at the Windows certificate store once, before cloning:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.sslbackend<span class="w"> </span>schannel
+</code></pre></div>
+</div>
 <h3 id="surforama-recommended-for-the-last-step">Surforama (recommended, for the last step)</h3>
 <p>Surforama is a <a href="https://napari.org/">napari</a> plugin; install it into its own environment:</p>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>surforama<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11

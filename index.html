@@ -825,11 +825,11 @@ pip<span class="w"> </span>install<span class="w"> </span>surforama
 <h2 id="step-0-download-and-organize-the-data">Step 0: Download and organize the data</h2>
 <p>You need three files:</p>
 <ul>
-<li><strong>Raw tomogram</strong> — <code>YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc</code> (~875 MB) from EMPIAR-12534. Needed for refinement and thickness.</li>
+<li><strong>Raw tomogram</strong> — EMPIAR file <code>YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc</code> (~875 MB) from EMPIAR-12534. Needed for refinement and thickness. We save it locally as <code>YTC041_1_lam4_2_ts_002.mrc</code> (see the note below).</li>
 <li><strong>Segmentation</strong> — <code>YTC041_1_lam4_2_ts_002_labels.mrc</code> (~437 MB), the matching IMM/OMM label map from the same EMPIAR entry.</li>
 <li><strong>Ribosome picks</strong> — <code>clean_ribosomes.star</code>, a small STAR file used in the optional bonus at the end.</li>
 </ul>
-<p>The pipeline expects the segmentation and tomogram in separate folders, with the tomogram sharing the segmentation's basename prefix (it does here — both start with <code>YTC041_1_lam4_2_ts_002</code>). Grab the <a href="https://raw.githubusercontent.com/baradlab/morphometrics_2hr/main/download_data.sh"><code>download_data.sh</code></a> helper and run it:</p>
+<p>The pipeline expects the segmentation and tomogram in separate folders, with the tomogram sharing the segmentation's basename prefix. Grab the <a href="https://raw.githubusercontent.com/baradlab/morphometrics_2hr/main/download_data.sh"><code>download_data.sh</code></a> helper and run it:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Download and lay everything out under ./morpho_run</span>
 curl<span class="w"> </span>-LO<span class="w"> </span>https://raw.githubusercontent.com/baradlab/morphometrics_2hr/main/download_data.sh
 bash<span class="w"> </span>download_data.sh
@@ -841,8 +841,11 @@ bash<span class="w"> </span>download_data.sh
 
 <span class="nv">EMPIAR</span><span class="o">=</span>https://ftp.ebi.ac.uk/empiar/world_availability/12534/data/EMPIAR_upload
 
-<span class="c1"># Raw tomogram (~875 MB)</span>
-curl<span class="w"> </span>-L<span class="w"> </span>-C<span class="w"> </span>-<span class="w"> </span>-o<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span><span class="se">\</span>
+<span class="c1"># Raw tomogram (~875 MB). Save WITHOUT the &quot;_9.98Apx.mrc&quot; double extension:</span>
+<span class="c1"># the pipeline strips only the last extension to get a tomogram&#39;s basename, so</span>
+<span class="c1"># &quot;...ts_002.mrc_9.98Apx.mrc&quot; would become &quot;...ts_002.mrc_9.98Apx&quot; and fail to</span>
+<span class="c1"># match the &quot;..._labels_&lt;COMPONENT&gt;&quot; graph names during refinement/thickness.</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-C<span class="w"> </span>-<span class="w"> </span>-o<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">&quot;</span><span class="nv">$EMPIAR</span><span class="s2">/Reconstructed_tomograms/YTC041_1/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc&quot;</span>
 
 <span class="c1"># IMM/OMM segmentation (~437 MB)</span>
@@ -855,7 +858,7 @@ curl<span class="w"> </span>-L<span class="w"> </span>-C<span class="w"> </span>
 </code></pre></div>
 <p>The downloads are the slowest part of the day — kick them off first. When they finish you should have:</p>
 <div class="highlight"><pre><span></span><code>morpho_run/
-├── tomograms/     YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc
+├── tomograms/     YTC041_1_lam4_2_ts_002.mrc
 ├── segmentations/ YTC041_1_lam4_2_ts_002_labels.mrc
 └── star/          clean_ribosomes.star
 </code></pre></div>
@@ -932,6 +935,14 @@ If your computer has fewer than 8 cores, reduce accordingly. </p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w">                            </span><span class="c1"># avoids a threading bug on some Linux setups</span>
 morphometrics<span class="w"> </span>refine_mesh<span class="w"> </span>config.yml<span class="w">                </span><span class="c1"># writes *_refined_iter1/2 + convergence plots</span>
 </code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>No graph files found matching ...</code> ?</p>
+<p>If refinement (or thickness) prints something like <code>No graph files found matching: ./morphometrics/YTC041_1_lam4_2_ts_002.mrc_9.98Apx*OMM.AVV_rh9.gt</code>, your tomogram still has the EMPIAR double extension. The pipeline strips only the <em>last</em> <code>.mrc</code>, leaving <code>...ts_002.mrc_9.98Apx</code>, which doesn't match the <code>..._labels_&lt;COMPONENT&gt;</code> graph names. Rename it to a clean single extension and re-run:</p>
+<div class="highlight"><pre><span></span><code>mv<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc
+morphometrics<span class="w"> </span>refine_mesh<span class="w"> </span>config.yml
+</code></pre></div>
+<p>The updated <code>download_data.sh</code> already saves it as <code>YTC041_1_lam4_2_ts_002.mrc</code>, so fresh downloads won't hit this.</p>
+</div>
 <p>Inspect the convergence plots and the per-iteration surfaces in Paraview, then promote the iteration you like (usually the last one):</p>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>accept_refinement<span class="w"> </span>config.yml<span class="w"> </span><span class="m">2</span><span class="w"> </span>--dry-run<span class="w">   </span><span class="c1"># preview what would be promoted</span>
 morphometrics<span class="w"> </span>accept_refinement<span class="w"> </span>config.yml<span class="w"> </span><span class="m">2</span><span class="w">             </span><span class="c1"># commit iteration 2</span>
@@ -1024,7 +1035,7 @@ morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.ym
 <p>This writes <code>obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj</code>.</p>
 <p><strong>Optional but helpful — deconvolve the tomogram</strong> so densities read more clearly (needs IMOD's <code>mtffilter</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># write it to the project root, NOT tomograms/, so the pipeline&#39;s *.mrc glob won&#39;t pick it up</span>
-mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span>-dec<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>-def<span class="w"> </span><span class="m">5</span><span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc
+mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc<span class="w"> </span>-dec<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>-def<span class="w"> </span><span class="m">5</span><span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc
 </code></pre></div>
 <p><strong>Launch Surforama</strong> with the tomogram and the mesh:</p>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>surforama

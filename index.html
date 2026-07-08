@@ -389,10 +389,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-make-surface-meshes-2-minutes" class="md-nav__link">
+  <a href="#step-2-make-surface-meshes-8-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Make surface meshes (~2 minutes)
+        Step 2: Make surface meshes (~8 minutes)
       
     </span>
   </a>
@@ -400,10 +400,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-measure-curvature-with-pycurv-3-minutes" class="md-nav__link">
+  <a href="#step-3-measure-curvature-with-pycurv-15-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Measure curvature with pycurv (~3 minutes)
+        Step 3: Measure curvature with pycurv (~15 minutes)
       
     </span>
   </a>
@@ -411,10 +411,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-refine-the-meshes-58-minutes-today" class="md-nav__link">
+  <a href="#step-4-refine-the-meshes-20-minutes-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Refine the meshes (~5–8 minutes today)
+        Step 4: Refine the meshes (~20 minutes today)
       
     </span>
   </a>
@@ -422,10 +422,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-5-distances-and-orientations-2-minutes" class="md-nav__link">
+  <a href="#step-5-distances-and-orientations-4-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5: Distances and orientations (~2 minutes)
+        Step 5: Distances and orientations (~4 minutes)
       
     </span>
   </a>
@@ -433,10 +433,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-membrane-thickness-3-minutes" class="md-nav__link">
+  <a href="#step-6-membrane-thickness-4-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6: Membrane thickness (~3 minutes)
+        Step 6: Membrane thickness (~4 minutes)
       
     </span>
   </a>
@@ -605,10 +605,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-make-surface-meshes-2-minutes" class="md-nav__link">
+  <a href="#step-2-make-surface-meshes-8-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Make surface meshes (~2 minutes)
+        Step 2: Make surface meshes (~8 minutes)
       
     </span>
   </a>
@@ -616,10 +616,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-measure-curvature-with-pycurv-3-minutes" class="md-nav__link">
+  <a href="#step-3-measure-curvature-with-pycurv-15-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Measure curvature with pycurv (~3 minutes)
+        Step 3: Measure curvature with pycurv (~15 minutes)
       
     </span>
   </a>
@@ -627,10 +627,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-refine-the-meshes-58-minutes-today" class="md-nav__link">
+  <a href="#step-4-refine-the-meshes-20-minutes-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Refine the meshes (~5–8 minutes today)
+        Step 4: Refine the meshes (~20 minutes today)
       
     </span>
   </a>
@@ -638,10 +638,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-5-distances-and-orientations-2-minutes" class="md-nav__link">
+  <a href="#step-5-distances-and-orientations-4-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5: Distances and orientations (~2 minutes)
+        Step 5: Distances and orientations (~4 minutes)
       
     </span>
   </a>
@@ -649,10 +649,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-membrane-thickness-3-minutes" class="md-nav__link">
+  <a href="#step-6-membrane-thickness-4-minutes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6: Membrane thickness (~3 minutes)
+        Step 6: Membrane thickness (~4 minutes)
       
     </span>
   </a>
@@ -734,7 +734,8 @@
 </div>
 <hr />
 <h2 id="installation">Installation</h2>
-<p>Install these <strong>before</strong> the session — the conda environment and the large downloads are the slow parts, and you don't want to spend your two hours on setup. Each tool lives in its own environment; that's normal for cryo-ET.</p>
+<p>Install these <strong>before</strong> the session — the conda environment and the large downloads are the slow parts, and you don't want to spend your two hours on setup. Each tool lives in its own environment; that's normal for cryo-ET. </p>
+<p>This workflow works on Mac and most Linux distributions. If you have a windows PC, either SSH into a workstation or set up <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>. No GPU is required for any operations today.</p>
 <table>
 <thead>
 <tr>
@@ -841,7 +842,7 @@ morphometrics<span class="w"> </span>--help<span class="w">                  </s
 morphometrics<span class="w"> </span>new_config<span class="w">              </span><span class="c1"># writes a fully-commented config.yml</span>
 </code></pre></div>
 <p>Edit <code>config.yml</code>. For this two-membrane, two-hour run the important keys are below — everything else can stay at its default:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">seg_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./segmentations/&quot;</span><span class="w">     </span><span class="c1"># folder with the label MRC</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">seg_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./segmentations/&quot;</span><span class="w">     </span><span class="c1"># folder with the label MRC</span>
 <span class="nt">tomo_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./tomograms/&quot;</span><span class="w">        </span><span class="c1"># folder with the raw tomogram (for refinement + thickness)</span>
 <span class="nt">work_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./morphometrics/&quot;</span><span class="w">    </span><span class="c1"># all outputs land here</span>
 
@@ -874,12 +875,13 @@ morphometrics<span class="w"> </span>new_config<span class="w">              </s
 <span class="w">  </span><span class="nt">xcorr_iterations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1</span><span class="p p-Indicator">]</span><span class="w">         </span><span class="c1"># iter 1 = fast cross-correlation, iter 2 = dual-Gaussian fit</span>
 <span class="w">  </span><span class="nt">convergence_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">      </span><span class="c1"># 0 = never stop early, so both iterations run</span>
 </code></pre></div>
+If your computer has fewer than 8 cores, reduce accordingly. </p>
 <div class="admonition tip">
 <p class="admonition-title">Why these refinement settings</p>
 <p>The full pipeline usually runs 6 iterations (the first few cross-correlation, the rest dual-Gaussian). Refinement is by far the slowest step because it re-runs pycurv internally each iteration. Setting <code>iterations: 2</code> with <code>xcorr_iterations: [1]</code> gives you exactly <strong>one cross-correlation pass</strong> (fast, locally sharpens the bilayer) followed by <strong>one dual-Gaussian pass</strong> (precise global centering) — enough to see the method work without the long wait. <code>convergence_threshold: 0</code> forces both iterations to run even if the mesh barely moves.</p>
 </div>
 <hr />
-<h2 id="step-2-make-surface-meshes-2-minutes">Step 2: Make surface meshes (~2 minutes)</h2>
+<h2 id="step-2-make-surface-meshes-8-minutes">Step 2: Make surface meshes (~8 minutes)</h2>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>make_meshes<span class="w"> </span>config.yml
 </code></pre></div>
 <p>This converts each labeled membrane into a surface mesh (screened-Poisson reconstruction + isotropic remeshing). It writes two formats per surface: a <code>.ply</code> for visualization in Meshlab and a <code>.surface.vtp</code> used by the rest of the pipeline. You get one of each for <code>IMM</code> and <code>OMM</code>.</p>
@@ -888,7 +890,7 @@ morphometrics<span class="w"> </span>new_config<span class="w">              </s
 </code></pre></div>
 <p>Make sure both membranes look like clean, continuous surfaces. Toggle the wireframe to see the triangles.</p>
 <hr />
-<h2 id="step-3-measure-curvature-with-pycurv-3-minutes">Step 3: Measure curvature with pycurv (~3 minutes)</h2>
+<h2 id="step-3-measure-curvature-with-pycurv-15-minutes">Step 3: Measure curvature with pycurv (~15 minutes)</h2>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>pycurv<span class="w"> </span>config.yml
 </code></pre></div>
 <p><a href="https://github.com/kalemaria/pycurv">pycurv</a> builds a triangle graph and measures curvature robustly with a vector-voting algorithm (morphometrics uses a heavily vectorized fork for speed). The key outputs per surface are the graph (<code>.AVV_rh9.gt</code>), the quantified surface (<code>.AVV_rh9.vtp</code>), and a per-triangle table (<code>.AVV_rh9.csv</code>).</p>
@@ -897,7 +899,7 @@ morphometrics<span class="w"> </span>new_config<span class="w">              </s
 </code></pre></div>
 <p>The IMM should show its characteristic high-curvature cristae; the OMM should be much smoother.</p>
 <hr />
-<h2 id="step-4-refine-the-meshes-58-minutes-today">Step 4: Refine the meshes (~5–8 minutes today)</h2>
+<h2 id="step-4-refine-the-meshes-20-minutes-today">Step 4: Refine the meshes (~20 minutes today)</h2>
 <p>Refinement recenters surface vertices onto the true bilayer center by sampling the raw tomogram density along each surface normal. It runs <strong>after</strong> pycurv and <strong>before</strong> distances/thickness. We shortened it to two iterations (one cross-correlation, one dual-Gaussian):</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w">                            </span><span class="c1"># avoids a threading bug on some Linux setups</span>
 morphometrics<span class="w"> </span>refine_mesh<span class="w"> </span>config.yml<span class="w">                </span><span class="c1"># writes *_refined_iter1/2 + convergence plots</span>
@@ -908,12 +910,12 @@ morphometrics<span class="w"> </span>accept_refinement<span class="w"> </span>co
 </code></pre></div>
 <p><code>accept_refinement</code> re-points the working files at the chosen iteration. Because we accepted a fully-refined iteration, you're ready to continue directly to distances.</p>
 <hr />
-<h2 id="step-5-distances-and-orientations-2-minutes">Step 5: Distances and orientations (~2 minutes)</h2>
+<h2 id="step-5-distances-and-orientations-4-minutes">Step 5: Distances and orientations (~4 minutes)</h2>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>distances_orientations<span class="w"> </span>config.yml
 </code></pre></div>
 <p>This measures inter-membrane distance and relative orientation between OMM and IMM, plus intra-surface verticality for each. Membrane–membrane spacing is one of the most biologically informative metrics you can pull from a tomogram — here it captures how tightly the IMM tracks the OMM. Outputs are added as new columns in the per-surface CSVs and as arrays on the VTP surfaces.</p>
 <hr />
-<h2 id="step-6-membrane-thickness-3-minutes">Step 6: Membrane thickness (~3 minutes)</h2>
+<h2 id="step-6-membrane-thickness-4-minutes">Step 6: Membrane thickness (~4 minutes)</h2>
 <p>Thickness is a two-command step: sample the density along normals, then fit the bilayer profile.</p>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>sample_density<span class="w"> </span>config.yml<span class="w">       </span><span class="c1"># samples raw tomogram density along normals</span>
 morphometrics<span class="w"> </span>measure_thickness<span class="w"> </span>config.yml<span class="w">    </span><span class="c1"># fits the bilayer to estimate thickness</span>

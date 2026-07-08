@@ -934,13 +934,18 @@ morphometrics<span class="w"> </span>hist2d<span class="w"> </span>morphometrics
 <h2 id="bonus-contextual-figures-in-chimerax">Bonus: contextual figures in ChimeraX</h2>
 <p>If you finish early, the quantified surfaces make great figure material. In <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a>, with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX</a> plugin, you can render a colored membrane surface with the ribosomes sitting in their real positions.</p>
 <p><strong>Get a colored surface into ChimeraX.</strong> You have two options:</p>
-<p><em>Option A — export a colored OBJ.</em> Bake a feature into a colored high-resolution OBJ (also works in Blender and Surforama):</p>
-<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--list-features<span class="w">   </span><span class="c1"># see colorable arrays</span>
+<p><em>Option A — export a colored OBJ.</em> Bake a feature into a colored high-resolution OBJ. ArtiaX and ChimeraX work in <strong>Ångström</strong>, which is <code>export_obj</code>'s default (<code>--scale_to_angstroms true</code>), so no scale flag is needed here:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># see the colorable arrays</span>
 morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>--cmap<span class="w"> </span>magma
+<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--list-features
+
+<span class="c1"># Ångström-scaled OBJ for ChimeraX/ArtiaX, written to obj_angstrom/</span>
+morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>--cmap<span class="w"> </span>magma<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scale_to_angstroms<span class="w"> </span><span class="nb">true</span><span class="w"> </span>--output-dir<span class="w"> </span>obj_angstrom/
 </code></pre></div>
-<p>Then <code>open</code> the resulting <code>.obj</code> in ChimeraX.</p>
+<p>Each run writes <code>&lt;base&gt;_&lt;feature&gt;.obj</code> (plus its <code>.mtl</code> and <code>.png</code>), so this produces <code>obj_angstrom/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_IMM_dist.obj</code>. <code>open</code> that <code>.obj</code> in ChimeraX. (The scale is baked into the file's coordinates — that's why we make a <em>separate</em> nm-scaled OBJ for Surforama below.)</p>
 <p><em>Option B — MorphometricsX (no export needed).</em> If you installed the optional <a href="https://github.com/baradlab/morphometricsx">MorphometricsX</a> bundle, skip <code>export_obj</code> entirely: <code>open morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp</code> directly and use the MorphometricsX panel to color by any stored field (curvedness, thickness, <code>IMM_dist</code>, …), adjust the colormap/range, and add a color key — all interactively. This is usually the faster and more flexible route for ChimeraX figures, since you can flip between quantifications without re-exporting. Note the mesh is stored in <strong>nm</strong>, so set the panel's <strong>Scale</strong> to <code>10</code> to line it up with an Ångström-scale tomogram and particle list.</p>
 <p><strong>Add the ribosomes.</strong> The <code>clean_ribosomes.star</code> file you downloaded holds oriented ribosome picks for this tomogram:</p>
 <ol>
@@ -953,10 +958,13 @@ morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.ym
 <hr />
 <h2 id="bonus-exploring-proteins-on-the-surface-with-surforama">Bonus: exploring proteins on the surface with Surforama</h2>
 <p><a href="https://github.com/cellcanvas/surforama">Surforama</a> is a <a href="https://napari.org/">napari</a> plugin that projects the local tomogram density onto a membrane mesh, so you can <em>see</em> what sits on the membrane, pick particles directly on the surface (oriented along the surface normal), and export them as RELION STAR files for subtomogram averaging. It pairs naturally with the surfaces you just built.</p>
-<p><strong>Make a surface for Surforama.</strong> Export the OMM surface as an OBJ (Surforama reads OBJ meshes):</p>
+<p><strong>Make an nm-scaled surface for Surforama.</strong> Surforama matches the mesh to the tomogram in <strong>nanometers</strong>, so export with <code>--scale_to_angstroms false</code> (the opposite of the Ångström OBJ we made for ChimeraX). Write it to its own folder so the two OBJs don't overwrite each other — the filenames don't encode the scale:</p>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--feature<span class="w"> </span>curvedness_VV
+<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--feature<span class="w"> </span>curvedness_VV<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scale_to_angstroms<span class="w"> </span><span class="nb">false</span><span class="w"> </span>--output-dir<span class="w"> </span>obj_nm/
 </code></pre></div>
+<p>This writes <code>obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj</code>.</p>
 <p><strong>Optional but helpful — deconvolve the tomogram</strong> so densities read more clearly (needs IMOD's <code>mtffilter</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># write it to the project root, NOT tomograms/, so the pipeline&#39;s *.mrc glob won&#39;t pick it up</span>
 mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span>-dec<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>-def<span class="w"> </span><span class="m">5</span><span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc
@@ -965,7 +973,7 @@ mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mr
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>surforama
 surforama<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--image-path<span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--mesh-path<span class="w"> </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.obj
+<span class="w">  </span>--mesh-path<span class="w"> </span>obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj
 </code></pre></div>
 <p>Adjust the projection <strong>offset</strong> and <strong>thickness</strong> — around an offset of 5–8 you should find dark spots on the outer membrane that correspond to membrane-associated ribosomes. To pick them:</p>
 <ol>

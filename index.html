@@ -455,6 +455,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#step-8-measure-distances-from-particles-to-the-membrane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Measure distances from particles to the membrane
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bonus-contextual-figures-in-chimerax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -664,6 +675,17 @@
     <span class="md-ellipsis">
       
         Step 7: Quick plots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-measure-distances-from-particles-to-the-membrane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Measure distances from particles to the membrane
       
     </span>
   </a>
@@ -938,6 +960,33 @@ morphometrics<span class="w"> </span>hist2d<span class="w"> </span>morphometrics
 <span class="w">  </span>-n1<span class="w"> </span>curvedness_VV<span class="w"> </span>-n2<span class="w"> </span>OMM_dist
 </code></pre></div>
 <p>The CSVs are plain per-triangle tables — if you'd rather not write Python, load them into R, Excel, or your favorite stats tool and go from there. With one tomogram this is mostly phenomenology; the real power of the method comes from aggregating these quantifications across many tomograms and conditions (<code>morphometrics stats</code>), which we don't cover today.</p>
+<hr />
+<h2 id="step-8-measure-distances-from-particles-to-the-membrane">Step 8: Measure distances from particles to the membrane</h2>
+<p>The quantified surfaces are also a ruler for <strong>particles</strong>. Given a STAR file of coordinates, <code>morphometrics generate_patches</code> finds the nearest membrane triangle to each particle and annotates the STAR with a per-particle <code>mesh_distance</code> (in nm). This is exactly how you separate, say, membrane-associated (co-translating) ribosomes from free cytoplasmic ones. We'll use the <code>clean_ribosomes.star</code> file you downloaded and measure each ribosome's distance to the <strong>OMM</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Command name</p>
+<p>The tool is <code>generate_patches</code> — it can also carve out membrane patches around each particle and matched random controls, but today we only want the distance annotation, so we turn the patch/control machinery off.</p>
+</div>
+<p>Add a <code>patch_analysis</code> block to your <code>config.yml</code>. The particle coordinate settings already match this STAR (<code>rlnCoordinateX/Y/Z</code> in pixels, <code>rlnPixelSize</code> = 3.33 Å/px), so the two keys that matter today are <code>annotate_star: true</code> and <code>generate_random: false</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">patch_analysis</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">membrane_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMM</span><span class="w">                    </span><span class="c1"># measure ribosome distance to the outer membrane</span>
+<span class="w">  </span><span class="nt">annotate_star</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                    </span><span class="c1"># write mesh_distance back into the STAR</span>
+<span class="w">  </span><span class="nt">generate_random</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                 </span><span class="c1"># no random control patches today</span>
+<span class="w">  </span><span class="nt">particle_max_distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">            </span><span class="c1"># keep every particle; we just want distances</span>
+<span class="w">  </span><span class="nt">star_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./star/&quot;</span><span class="w">                    </span><span class="c1"># where the STAR lives</span>
+<span class="w">  </span><span class="nt">star_pattern</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;clean_ribosomes.star&quot;</span><span class="w">   </span><span class="c1"># our file isn&#39;t named &lt;tomogram&gt;.star, so give it literally</span>
+<span class="w">  </span><span class="c1"># coordinate columns / pixel size use the defaults, which fit this STAR:</span>
+<span class="w">  </span><span class="c1"># star_coord_columns: [rlnCoordinateX, rlnCoordinateY, rlnCoordinateZ]</span>
+<span class="w">  </span><span class="c1"># star_pixelsize_column: rlnPixelSize</span>
+<span class="w">  </span><span class="c1"># star_coords_in_pixels: true</span>
+</code></pre></div>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>generate_patches<span class="w"> </span>config.yml
+</code></pre></div>
+<p>It picks up the OMM graph from Step 3/4 and writes an annotated STAR to the output folder:</p>
+<div class="highlight"><pre><span></span><code>morphometrics/clean_ribosomes_OMM_meshannotated.star
+</code></pre></div>
+<p>Each row keeps its original particle data plus three new columns: <code>mesh_distance</code> (nm to the nearest OMM triangle), <code>patch_id</code> (the 1-based row number, so it maps straight back to the original STAR), and <code>mesh_neighbor_id</code> (the index of that nearest triangle). Sort or filter on <code>mesh_distance</code> to pull out the membrane-proximal ribosomes — e.g. everything within ~15 nm of the OMM — and carry that filtered STAR into the visualization steps below.</p>
 <hr />
 <h2 id="bonus-contextual-figures-in-chimerax">Bonus: contextual figures in ChimeraX</h2>
 <p>If you finish early, the quantified surfaces make great figure material. In <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a>, with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX</a> plugin, you can render a colored membrane surface with the ribosomes sitting in their real positions.</p>

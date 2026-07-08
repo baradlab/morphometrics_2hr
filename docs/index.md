@@ -15,7 +15,9 @@ This is a **condensed, single-page** version of the [full U Michigan tutorial](h
 
 ## Installation
 
-Install these **before** the session — the conda environment and the large downloads are the slow parts, and you don't want to spend your two hours on setup. Each tool lives in its own environment; that's normal for cryo-ET.
+Install these **before** the session — the conda environment and the large downloads are the slow parts, and you don't want to spend your two hours on setup. Each tool lives in its own environment; that's normal for cryo-ET. 
+
+This workflow works on Mac and most Linux distributions. If you have a windows PC, either SSH into a workstation or set up [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about). No GPU is required for any operations today.
 
 | Tool | Role today | How to install |
 | --- | --- | --- |
@@ -155,13 +157,14 @@ mesh_refinement:                # SHORTENED for today: 2 iterations total
   xcorr_iterations: [1]         # iter 1 = fast cross-correlation, iter 2 = dual-Gaussian fit
   convergence_threshold: 0      # 0 = never stop early, so both iterations run
 ```
+If your computer has fewer than 8 cores, reduce accordingly. 
 
 !!! tip "Why these refinement settings"
     The full pipeline usually runs 6 iterations (the first few cross-correlation, the rest dual-Gaussian). Refinement is by far the slowest step because it re-runs pycurv internally each iteration. Setting `iterations: 2` with `xcorr_iterations: [1]` gives you exactly **one cross-correlation pass** (fast, locally sharpens the bilayer) followed by **one dual-Gaussian pass** (precise global centering) — enough to see the method work without the long wait. `convergence_threshold: 0` forces both iterations to run even if the mesh barely moves.
 
 ---
 
-## Step 2: Make surface meshes (~2 minutes)
+## Step 2: Make surface meshes (~8 minutes)
 
 ```bash
 morphometrics make_meshes config.yml
@@ -179,7 +182,7 @@ Make sure both membranes look like clean, continuous surfaces. Toggle the wirefr
 
 ---
 
-## Step 3: Measure curvature with pycurv (~3 minutes)
+## Step 3: Measure curvature with pycurv (~15 minutes)
 
 ```bash
 morphometrics pycurv config.yml
@@ -197,7 +200,7 @@ The IMM should show its characteristic high-curvature cristae; the OMM should be
 
 ---
 
-## Step 4: Refine the meshes (~5–8 minutes today)
+## Step 4: Refine the meshes (~20 minutes today)
 
 Refinement recenters surface vertices onto the true bilayer center by sampling the raw tomogram density along each surface normal. It runs **after** pycurv and **before** distances/thickness. We shortened it to two iterations (one cross-correlation, one dual-Gaussian):
 
@@ -217,7 +220,7 @@ morphometrics accept_refinement config.yml 2             # commit iteration 2
 
 ---
 
-## Step 5: Distances and orientations (~2 minutes)
+## Step 5: Distances and orientations (~4 minutes)
 
 ```bash
 morphometrics distances_orientations config.yml
@@ -227,7 +230,7 @@ This measures inter-membrane distance and relative orientation between OMM and I
 
 ---
 
-## Step 6: Membrane thickness (~3 minutes)
+## Step 6: Membrane thickness (~4 minutes)
 
 Thickness is a two-command step: sample the density along normals, then fit the bilayer profile.
 

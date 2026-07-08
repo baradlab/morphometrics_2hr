@@ -177,15 +177,15 @@ If your computer has fewer than 8 cores, reduce accordingly.
 morphometrics make_meshes config.yml
 ```
 
-This converts each labeled membrane into a surface mesh (screened-Poisson reconstruction + isotropic remeshing). It writes two formats per surface: a `.ply` for visualization in Meshlab and a `.surface.vtp` used by the rest of the pipeline. You get one of each for `IMM` and `OMM`.
+This converts each labeled membrane into a surface mesh (screened-Poisson reconstruction + isotropic remeshing). It writes two formats per surface: a `.ply` for viewing in mesh editors and a `.surface.vtp` used by the rest of the pipeline. You get one of each for `IMM` and `OMM`.
 
-Take a quick look before going further — garbage in, garbage out:
+Take a quick look before going further — garbage in, garbage out. Open the `.surface.vtp` meshes in [Paraview](https://www.paraview.org/) (the same tool you'll use for the quantified surfaces later):
 
 ```bash
-meshlab morphometrics/*.ply     # or open in any mesh viewer
+paraview morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.surface.vtp
 ```
 
-Make sure both membranes look like clean, continuous surfaces. Toggle the wireframe to see the triangles.
+Make sure both membranes look like clean, continuous surfaces. Set the representation to **Surface With Edges** to see the individual triangles, and load the IMM `.surface.vtp` alongside the OMM to inspect them together.
 
 ---
 

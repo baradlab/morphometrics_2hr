@@ -317,6 +317,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#surface-morphometrics-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Surface Morphometrics (required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#surforama-recommended-for-the-last-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Surforama (recommended, for the last step)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chimerax-add-ons-artiax-optional-morphometricsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChimeraX add-ons (ArtiaX + optional MorphometricsX)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-0-download-and-organize-the-data" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -405,10 +455,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bonus-contextual-figures-and-ribosomes" class="md-nav__link">
+  <a href="#bonus-contextual-figures-in-chimerax" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bonus: contextual figures and ribosomes
+        Bonus: contextual figures in ChimeraX
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-exploring-proteins-on-the-surface-with-surforama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus: exploring proteins on the surface with Surforama
       
     </span>
   </a>
@@ -472,6 +533,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#surface-morphometrics-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Surface Morphometrics (required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#surforama-recommended-for-the-last-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Surforama (recommended, for the last step)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chimerax-add-ons-artiax-optional-morphometricsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChimeraX add-ons (ArtiaX + optional MorphometricsX)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-0-download-and-organize-the-data" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -560,10 +671,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bonus-contextual-figures-and-ribosomes" class="md-nav__link">
+  <a href="#bonus-contextual-figures-in-chimerax" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bonus: contextual figures and ribosomes
+        Bonus: contextual figures in ChimeraX
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-exploring-proteins-on-the-surface-with-surforama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus: exploring proteins on the surface with Surforama
       
     </span>
   </a>
@@ -610,6 +732,66 @@
 <p class="admonition-title">What we skip to save time</p>
 <p>The full workflow starts from a raw tomogram, segments membranes with MemBrain-seg, and cleans them up in Mosaic. Here we start from a <strong>pre-made IMM/OMM segmentation</strong> so we can spend all our time on the morphometrics itself. We also run a <strong>shortened mesh refinement</strong> (2 iterations instead of 6) and a coarser mesh than we would use for publication.</p>
 </div>
+<hr />
+<h2 id="installation">Installation</h2>
+<p>Install these <strong>before</strong> the session — the conda environment and the large downloads are the slow parts, and you don't want to spend your two hours on setup. Each tool lives in its own environment; that's normal for cryo-ET.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Role today</th>
+<th>How to install</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Surface Morphometrics</strong></td>
+<td>Required — the whole pipeline</td>
+<td>Conda (see below)</td>
+</tr>
+<tr>
+<td><strong>Paraview</strong></td>
+<td>Recommended — view quantified surfaces</td>
+<td><a href="https://www.paraview.org/download/">Download</a></td>
+</tr>
+<tr>
+<td><strong>ChimeraX</strong></td>
+<td>Recommended — publication figures</td>
+<td><a href="https://www.cgl.ucsf.edu/chimerax/download.html">Download</a></td>
+</tr>
+<tr>
+<td><strong>ArtiaX</strong></td>
+<td>Recommended — particles in tomogram context (ChimeraX plugin)</td>
+<td>ChimeraX ▸ Tools ▸ More Tools… ▸ <em>ArtiaX</em> ▸ Install</td>
+</tr>
+<tr>
+<td><strong>Surforama</strong></td>
+<td>Recommended — pick membrane-associated proteins</td>
+<td><code>pip install surforama</code> in a fresh env</td>
+</tr>
+<tr>
+<td><strong>MorphometricsX</strong></td>
+<td>Optional — load quantified <code>.vtp</code> straight into ChimeraX</td>
+<td>ChimeraX ▸ Tools ▸ More Tools… ▸ <em>MorphometricsX</em> ▸ Install</td>
+</tr>
+</tbody>
+</table>
+<h3 id="surface-morphometrics-required">Surface Morphometrics (required)</h3>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/grotjahnlab/surface_morphometrics.git
+<span class="nb">cd</span><span class="w"> </span>surface_morphometrics
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">        </span><span class="c1"># installs deps + the `morphometrics` command</span>
+conda<span class="w"> </span>activate<span class="w"> </span>morphometrics
+morphometrics<span class="w"> </span>--help<span class="w">                        </span><span class="c1"># should list the pipeline subcommands</span>
+</code></pre></div>
+<p>On older Ubuntu (or if <code>graph-tool</code> fails to solve), use <code>conda env create -f environment-ubuntu.yml</code> instead. There is also a Docker image — see the <a href="https://github.com/grotjahnlab/surface_morphometrics#installation">repo README</a>.</p>
+<h3 id="surforama-recommended-for-the-last-step">Surforama (recommended, for the last step)</h3>
+<p>Surforama is a <a href="https://napari.org/">napari</a> plugin; install it into its own environment:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>surforama<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
+conda<span class="w"> </span>activate<span class="w"> </span>surforama
+pip<span class="w"> </span>install<span class="w"> </span>surforama
+</code></pre></div>
+<h3 id="chimerax-add-ons-artiax-optional-morphometricsx">ChimeraX add-ons (ArtiaX + optional MorphometricsX)</h3>
+<p>Install <a href="https://www.cgl.ucsf.edu/chimerax/download.html">ChimeraX</a>, then from inside ChimeraX open <strong>Tools ▸ More Tools…</strong> to reach the Toolshed and install <strong>ArtiaX</strong> (particles in context) and, optionally, <strong>MorphometricsX</strong>. Restart ChimeraX after installing. MorphometricsX opens the quantified <code>.vtp</code> surfaces directly and colors them by any stored field — a nice alternative to exporting OBJs, described in the <a href="#bonus-contextual-figures-in-chimerax">ChimeraX bonus</a> below. You can also install MorphometricsX from the command line: <code>toolshed install ChimeraX-MorphometricsX</code>.</p>
 <hr />
 <h2 id="step-0-download-and-organize-the-data">Step 0: Download and organize the data</h2>
 <p>You need three files:</p>
@@ -749,14 +931,50 @@ morphometrics<span class="w"> </span>hist2d<span class="w"> </span>morphometrics
 </code></pre></div>
 <p>The CSVs are plain per-triangle tables — if you'd rather not write Python, load them into R, Excel, or your favorite stats tool and go from there. With one tomogram this is mostly phenomenology; the real power of the method comes from aggregating these quantifications across many tomograms and conditions (<code>morphometrics stats</code>), which we don't cover today.</p>
 <hr />
-<h2 id="bonus-contextual-figures-and-ribosomes">Bonus: contextual figures and ribosomes</h2>
-<p>If you finish early, the quantified surfaces make great figure material. You can export a colored high-resolution mesh for ChimeraX, Blender, or Surforama:</p>
+<h2 id="bonus-contextual-figures-in-chimerax">Bonus: contextual figures in ChimeraX</h2>
+<p>If you finish early, the quantified surfaces make great figure material. In <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a>, with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX</a> plugin, you can render a colored membrane surface with the ribosomes sitting in their real positions.</p>
+<p><strong>Get a colored surface into ChimeraX.</strong> You have two options:</p>
+<p><em>Option A — export a colored OBJ.</em> Bake a feature into a colored high-resolution OBJ (also works in Blender and Surforama):</p>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--list-features<span class="w">   </span><span class="c1"># see colorable arrays</span>
 morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>--cmap<span class="w"> </span>magma
 </code></pre></div>
-<p>The <code>clean_ribosomes.star</code> file you downloaded holds oriented ribosome picks for this tomogram — you can load them alongside the OMM surface in ChimeraX/ArtiaX or explore them on the membrane in <a href="https://github.com/cellcanvas/surforama">Surforama</a> to see how ribosomes distribute relative to the outer membrane. See the <a href="https://baradlab.com/michigan_tutorial">full tutorial</a> for those visualization walkthroughs.</p>
+<p>Then <code>open</code> the resulting <code>.obj</code> in ChimeraX.</p>
+<p><em>Option B — MorphometricsX (no export needed).</em> If you installed the optional <a href="https://github.com/baradlab/morphometricsx">MorphometricsX</a> bundle, skip <code>export_obj</code> entirely: <code>open morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp</code> directly and use the MorphometricsX panel to color by any stored field (curvedness, thickness, <code>IMM_dist</code>, …), adjust the colormap/range, and add a color key — all interactively. This is usually the faster and more flexible route for ChimeraX figures, since you can flip between quantifications without re-exporting. Note the mesh is stored in <strong>nm</strong>, so set the panel's <strong>Scale</strong> to <code>10</code> to line it up with an Ångström-scale tomogram and particle list.</p>
+<p><strong>Add the ribosomes.</strong> The <code>clean_ribosomes.star</code> file you downloaded holds oriented ribosome picks for this tomogram:</p>
+<ol>
+<li>Load the OBJ (Option A) or the <code>.vtp</code> (Option B) as your surface.</li>
+<li>Launch <strong>ArtiaX</strong> and add <code>star/clean_ribosomes.star</code> to the particle lists.</li>
+<li>Under Select/Manipulate, set the Pixel Size factors to <code>3.3, 1</code>.</li>
+<li>Add the raw tomogram to the ArtiaX tomogram list and average ~5 slabs for a clean orthoslice (or hide it).</li>
+<li>Fetch a ribosome map (e.g. <code>open 48752 from emdb</code>), add it as a new surface for the particle list, enable soft lighting, and make your figure.</li>
+</ol>
+<hr />
+<h2 id="bonus-exploring-proteins-on-the-surface-with-surforama">Bonus: exploring proteins on the surface with Surforama</h2>
+<p><a href="https://github.com/cellcanvas/surforama">Surforama</a> is a <a href="https://napari.org/">napari</a> plugin that projects the local tomogram density onto a membrane mesh, so you can <em>see</em> what sits on the membrane, pick particles directly on the surface (oriented along the surface normal), and export them as RELION STAR files for subtomogram averaging. It pairs naturally with the surfaces you just built.</p>
+<p><strong>Make a surface for Surforama.</strong> Export the OMM surface as an OBJ (Surforama reads OBJ meshes):</p>
+<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--feature<span class="w"> </span>curvedness_VV
+</code></pre></div>
+<p><strong>Optional but helpful — deconvolve the tomogram</strong> so densities read more clearly (needs IMOD's <code>mtffilter</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># write it to the project root, NOT tomograms/, so the pipeline&#39;s *.mrc glob won&#39;t pick it up</span>
+mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span>-dec<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>-def<span class="w"> </span><span class="m">5</span><span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc
+</code></pre></div>
+<p><strong>Launch Surforama</strong> with the tomogram and the mesh:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>surforama
+surforama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image-path<span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mesh-path<span class="w"> </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.obj
+</code></pre></div>
+<p>Adjust the projection <strong>offset</strong> and <strong>thickness</strong> — around an offset of 5–8 you should find dark spots on the outer membrane that correspond to membrane-associated ribosomes. To pick them:</p>
+<ol>
+<li>Click <strong>Enable</strong> under "pick on surface".</li>
+<li>Click points on the surface where you see ribosomes.</li>
+<li>Click <strong>Select File</strong> next to the file path and choose a STAR filename.</li>
+<li>Click <strong>Save</strong>.</li>
+<li>Inspect the picks — they get initial orientations from the surface normals, so you get <code>phi</code>/<code>psi</code> for free (with <code>rot</code> at ±180). That geometric head start is exactly what makes membrane-anchored particles nice to average.</li>
+</ol>
 <hr />
 <h2 id="file-types-youll-see">File types you'll see</h2>
 <table>

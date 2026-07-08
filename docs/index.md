@@ -267,6 +267,45 @@ The CSVs are plain per-triangle tables — if you'd rather not write Python, loa
 
 ---
 
+## Step 8: Measure distances from particles to the membrane
+
+The quantified surfaces are also a ruler for **particles**. Given a STAR file of coordinates, `morphometrics generate_patches` finds the nearest membrane triangle to each particle and annotates the STAR with a per-particle `mesh_distance` (in nm). This is exactly how you separate, say, membrane-associated (co-translating) ribosomes from free cytoplasmic ones. We'll use the `clean_ribosomes.star` file you downloaded and measure each ribosome's distance to the **OMM**.
+
+!!! note "Command name"
+    The tool is `generate_patches` — it can also carve out membrane patches around each particle and matched random controls, but today we only want the distance annotation, so we turn the patch/control machinery off.
+
+Add a `patch_analysis` block to your `config.yml`. The particle coordinate settings already match this STAR (`rlnCoordinateX/Y/Z` in pixels, `rlnPixelSize` = 3.33 Å/px), so the two keys that matter today are `annotate_star: true` and `generate_random: false`:
+
+```yaml
+patch_analysis:
+  membrane_label: OMM                    # measure ribosome distance to the outer membrane
+  annotate_star: true                    # write mesh_distance back into the STAR
+  generate_random: false                 # no random control patches today
+  particle_max_distance: null            # keep every particle; we just want distances
+  star_dir: "./star/"                    # where the STAR lives
+  star_pattern: "clean_ribosomes.star"   # our file isn't named <tomogram>.star, so give it literally
+  # coordinate columns / pixel size use the defaults, which fit this STAR:
+  # star_coord_columns: [rlnCoordinateX, rlnCoordinateY, rlnCoordinateZ]
+  # star_pixelsize_column: rlnPixelSize
+  # star_coords_in_pixels: true
+```
+
+Then run:
+
+```bash
+morphometrics generate_patches config.yml
+```
+
+It picks up the OMM graph from Step 3/4 and writes an annotated STAR to the output folder:
+
+```
+morphometrics/clean_ribosomes_OMM_meshannotated.star
+```
+
+Each row keeps its original particle data plus three new columns: `mesh_distance` (nm to the nearest OMM triangle), `patch_id` (the 1-based row number, so it maps straight back to the original STAR), and `mesh_neighbor_id` (the index of that nearest triangle). Sort or filter on `mesh_distance` to pull out the membrane-proximal ribosomes — e.g. everything within ~15 nm of the OMM — and carry that filtered STAR into the visualization steps below.
+
+---
+
 ## Bonus: contextual figures in ChimeraX
 
 If you finish early, the quantified surfaces make great figure material. In [ChimeraX](https://www.cgl.ucsf.edu/chimerax/), with the [ArtiaX](https://github.com/FrangakisLab/ArtiaX) plugin, you can render a colored membrane surface with the ribosomes sitting in their real positions.

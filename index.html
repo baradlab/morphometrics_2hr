@@ -724,9 +724,9 @@
 
 
 <h1 id="surface-morphometrics-in-2-hours">Surface Morphometrics in 2 Hours</h1>
-<p><img alt="Workflow Figure" src="https://raw.githubusercontent.com/GrotjahnLab/surface_morphometrics/master/Workflow_title.png" /></p>
+<p><img alt="Workflow Figure" src="https://raw.githubusercontent.com/baradlab/surface_morphometrics/master/Workflow_title.png" /></p>
 <h3 id="quantifying-membrane-ultrastructure-from-a-single-cryo-et-tomogram-start-to-finish-in-one-sitting">Quantifying membrane ultrastructure from a single cryo-ET tomogram — start to finish in one sitting.</h3>
-<p><a href="https://github.com/grotjahnlab/surface_morphometrics">Surface Morphometrics</a> is a toolbox for building high-quality triangle-mesh models of membranes segmented from cryo-ET (or other volumetric imaging) and using them to measure membrane geometry — curvature, inter-membrane distance and orientation, and bilayer thickness — both locally and globally.</p>
+<p><a href="https://github.com/baradlab/surface_morphometrics">Surface Morphometrics</a> is a toolbox for building high-quality triangle-mesh models of membranes segmented from cryo-ET (or other volumetric imaging) and using them to measure membrane geometry — curvature, inter-membrane distance and orientation, and bilayer thickness — both locally and globally.</p>
 <p>This is a <strong>condensed, single-page</strong> version of the <a href="https://baradlab.com/michigan_tutorial">full U Michigan tutorial</a>. It is designed to run end-to-end in about two hours on a real tomogram. We work with one mitochondrial tomogram from <a href="https://www.ebi.ac.uk/empiar/EMPIAR-12534/">EMPIAR-12534</a> and its pre-made segmentation, which contains just two membranes — the <strong>inner mitochondrial membrane (IMM)</strong> and <strong>outer mitochondrial membrane (OMM)</strong>. Because there are only two surfaces and we keep the meshes a little coarse, every step finishes quickly.</p>
 <div class="admonition note">
 <p class="admonition-title">What we skip to save time</p>
@@ -778,13 +778,13 @@
 </tbody>
 </table>
 <h3 id="surface-morphometrics-required">Surface Morphometrics (required)</h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/grotjahnlab/surface_morphometrics.git
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/baradlab/surface_morphometrics.git
 <span class="nb">cd</span><span class="w"> </span>surface_morphometrics
 conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">        </span><span class="c1"># installs deps + the `morphometrics` command</span>
 conda<span class="w"> </span>activate<span class="w"> </span>morphometrics
 morphometrics<span class="w"> </span>--help<span class="w">                        </span><span class="c1"># should list the pipeline subcommands</span>
 </code></pre></div>
-<p>On older Ubuntu (or if <code>graph-tool</code> fails to solve), use <code>conda env create -f environment-ubuntu.yml</code> instead. There is also a Docker image — see the <a href="https://github.com/grotjahnlab/surface_morphometrics#installation">repo README</a>.</p>
+<p>On older Ubuntu (or if <code>graph-tool</code> fails to solve), use <code>conda env create -f environment-ubuntu.yml</code> instead. There is also a Docker image — see the <a href="https://github.com/baradlab/surface_morphometrics#installation">repo README</a>.</p>
 <h3 id="surforama-recommended-for-the-last-step">Surforama (recommended, for the last step)</h3>
 <p>Surforama is a <a href="https://napari.org/">napari</a> plugin; install it into its own environment:</p>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>surforama<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11

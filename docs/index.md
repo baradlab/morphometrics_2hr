@@ -263,16 +263,21 @@ If you finish early, the quantified surfaces make great figure material. In [Chi
 
 **Get a colored surface into ChimeraX.** You have two options:
 
-*Option A — export a colored OBJ.* Bake a feature into a colored high-resolution OBJ (also works in Blender and Surforama):
+*Option A — export a colored OBJ.* Bake a feature into a colored high-resolution OBJ. ArtiaX and ChimeraX work in **Ångström**, which is `export_obj`'s default (`--scale_to_angstroms true`), so no scale flag is needed here:
 
 ```bash
+# see the colorable arrays
 morphometrics export_obj config.yml \
-  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --list-features   # see colorable arrays
+  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --list-features
+
+# Ångström-scaled OBJ for ChimeraX/ArtiaX, written to obj_angstrom/
 morphometrics export_obj config.yml \
-  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --feature IMM_dist --cmap magma
+  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp \
+  --feature IMM_dist --cmap magma \
+  --scale_to_angstroms true --output-dir obj_angstrom/
 ```
 
-Then `open` the resulting `.obj` in ChimeraX.
+Each run writes `<base>_<feature>.obj` (plus its `.mtl` and `.png`), so this produces `obj_angstrom/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_IMM_dist.obj`. `open` that `.obj` in ChimeraX. (The scale is baked into the file's coordinates — that's why we make a *separate* nm-scaled OBJ for Surforama below.)
 
 *Option B — MorphometricsX (no export needed).* If you installed the optional [MorphometricsX](https://github.com/baradlab/morphometricsx) bundle, skip `export_obj` entirely: `open morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp` directly and use the MorphometricsX panel to color by any stored field (curvedness, thickness, `IMM_dist`, …), adjust the colormap/range, and add a color key — all interactively. This is usually the faster and more flexible route for ChimeraX figures, since you can flip between quantifications without re-exporting. Note the mesh is stored in **nm**, so set the panel's **Scale** to `10` to line it up with an Ångström-scale tomogram and particle list.
 
@@ -290,12 +295,16 @@ Then `open` the resulting `.obj` in ChimeraX.
 
 [Surforama](https://github.com/cellcanvas/surforama) is a [napari](https://napari.org/) plugin that projects the local tomogram density onto a membrane mesh, so you can *see* what sits on the membrane, pick particles directly on the surface (oriented along the surface normal), and export them as RELION STAR files for subtomogram averaging. It pairs naturally with the surfaces you just built.
 
-**Make a surface for Surforama.** Export the OMM surface as an OBJ (Surforama reads OBJ meshes):
+**Make an nm-scaled surface for Surforama.** Surforama matches the mesh to the tomogram in **nanometers**, so export with `--scale_to_angstroms false` (the opposite of the Ångström OBJ we made for ChimeraX). Write it to its own folder so the two OBJs don't overwrite each other — the filenames don't encode the scale:
 
 ```bash
 morphometrics export_obj config.yml \
-  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --feature curvedness_VV
+  morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp \
+  --feature curvedness_VV \
+  --scale_to_angstroms false --output-dir obj_nm/
 ```
+
+This writes `obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj`.
 
 **Optional but helpful — deconvolve the tomogram** so densities read more clearly (needs IMOD's `mtffilter`):
 
@@ -310,7 +319,7 @@ mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc -dec 0.5 -def 5 YTC04
 conda activate surforama
 surforama \
   --image-path YTC041_1_lam4_2_ts_002_dec.mrc \
-  --mesh-path morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.obj
+  --mesh-path obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj
 ```
 
 Adjust the projection **offset** and **thickness** — around an offset of 5–8 you should find dark spots on the outer membrane that correspond to membrane-associated ribosomes. To pick them:

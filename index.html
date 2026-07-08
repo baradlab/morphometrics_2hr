@@ -912,11 +912,11 @@ If your computer has fewer than 8 cores, reduce accordingly. </p>
 <h2 id="step-2-make-surface-meshes-8-minutes">Step 2: Make surface meshes (~8 minutes)</h2>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>make_meshes<span class="w"> </span>config.yml
 </code></pre></div>
-<p>This converts each labeled membrane into a surface mesh (screened-Poisson reconstruction + isotropic remeshing). It writes two formats per surface: a <code>.ply</code> for visualization in Meshlab and a <code>.surface.vtp</code> used by the rest of the pipeline. You get one of each for <code>IMM</code> and <code>OMM</code>.</p>
-<p>Take a quick look before going further — garbage in, garbage out:</p>
-<div class="highlight"><pre><span></span><code>meshlab<span class="w"> </span>morphometrics/*.ply<span class="w">     </span><span class="c1"># or open in any mesh viewer</span>
+<p>This converts each labeled membrane into a surface mesh (screened-Poisson reconstruction + isotropic remeshing). It writes two formats per surface: a <code>.ply</code> for viewing in mesh editors and a <code>.surface.vtp</code> used by the rest of the pipeline. You get one of each for <code>IMM</code> and <code>OMM</code>.</p>
+<p>Take a quick look before going further — garbage in, garbage out. Open the <code>.surface.vtp</code> meshes in <a href="https://www.paraview.org/">Paraview</a> (the same tool you'll use for the quantified surfaces later):</p>
+<div class="highlight"><pre><span></span><code>paraview<span class="w"> </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.surface.vtp
 </code></pre></div>
-<p>Make sure both membranes look like clean, continuous surfaces. Toggle the wireframe to see the triangles.</p>
+<p>Make sure both membranes look like clean, continuous surfaces. Set the representation to <strong>Surface With Edges</strong> to see the individual triangles, and load the IMM <code>.surface.vtp</code> alongside the OMM to inspect them together.</p>
 <hr />
 <h2 id="step-3-measure-curvature-with-pycurv-15-minutes">Step 3: Measure curvature with pycurv (~15 minutes)</h2>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>pycurv<span class="w"> </span>config.yml

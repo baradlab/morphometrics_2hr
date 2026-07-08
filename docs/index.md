@@ -67,11 +67,11 @@ Install [ChimeraX](https://www.cgl.ucsf.edu/chimerax/download.html), then from i
 
 You need three files:
 
-* **Raw tomogram** — `YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc` (~875 MB) from EMPIAR-12534. Needed for refinement and thickness.
+* **Raw tomogram** — EMPIAR file `YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc` (~875 MB) from EMPIAR-12534. Needed for refinement and thickness. We save it locally as `YTC041_1_lam4_2_ts_002.mrc` (see the note below).
 * **Segmentation** — `YTC041_1_lam4_2_ts_002_labels.mrc` (~437 MB), the matching IMM/OMM label map from the same EMPIAR entry.
 * **Ribosome picks** — `clean_ribosomes.star`, a small STAR file used in the optional bonus at the end.
 
-The pipeline expects the segmentation and tomogram in separate folders, with the tomogram sharing the segmentation's basename prefix (it does here — both start with `YTC041_1_lam4_2_ts_002`). Grab the [`download_data.sh`](https://raw.githubusercontent.com/baradlab/morphometrics_2hr/main/download_data.sh) helper and run it:
+The pipeline expects the segmentation and tomogram in separate folders, with the tomogram sharing the segmentation's basename prefix. Grab the [`download_data.sh`](https://raw.githubusercontent.com/baradlab/morphometrics_2hr/main/download_data.sh) helper and run it:
 
 ```bash
 # Download and lay everything out under ./morpho_run
@@ -88,8 +88,11 @@ cd morpho_run
 
 EMPIAR=https://ftp.ebi.ac.uk/empiar/world_availability/12534/data/EMPIAR_upload
 
-# Raw tomogram (~875 MB)
-curl -L -C - -o tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc \
+# Raw tomogram (~875 MB). Save WITHOUT the "_9.98Apx.mrc" double extension:
+# the pipeline strips only the last extension to get a tomogram's basename, so
+# "...ts_002.mrc_9.98Apx.mrc" would become "...ts_002.mrc_9.98Apx" and fail to
+# match the "..._labels_<COMPONENT>" graph names during refinement/thickness.
+curl -L -C - -o tomograms/YTC041_1_lam4_2_ts_002.mrc \
   "$EMPIAR/Reconstructed_tomograms/YTC041_1/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc"
 
 # IMM/OMM segmentation (~437 MB)
@@ -105,7 +108,7 @@ The downloads are the slowest part of the day — kick them off first. When they
 
 ```
 morpho_run/
-├── tomograms/     YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc
+├── tomograms/     YTC041_1_lam4_2_ts_002.mrc
 ├── segmentations/ YTC041_1_lam4_2_ts_002_labels.mrc
 └── star/          clean_ribosomes.star
 ```
@@ -215,6 +218,16 @@ Refinement recenters surface vertices onto the true bilayer center by sampling t
 export OMP_NUM_THREADS=1                            # avoids a threading bug on some Linux setups
 morphometrics refine_mesh config.yml                # writes *_refined_iter1/2 + convergence plots
 ```
+
+!!! warning "`No graph files found matching ...` ?"
+    If refinement (or thickness) prints something like `No graph files found matching: ./morphometrics/YTC041_1_lam4_2_ts_002.mrc_9.98Apx*OMM.AVV_rh9.gt`, your tomogram still has the EMPIAR double extension. The pipeline strips only the *last* `.mrc`, leaving `...ts_002.mrc_9.98Apx`, which doesn't match the `..._labels_<COMPONENT>` graph names. Rename it to a clean single extension and re-run:
+
+    ```bash
+    mv tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc tomograms/YTC041_1_lam4_2_ts_002.mrc
+    morphometrics refine_mesh config.yml
+    ```
+
+    The updated `download_data.sh` already saves it as `YTC041_1_lam4_2_ts_002.mrc`, so fresh downloads won't hit this.
 
 Inspect the convergence plots and the per-iteration surfaces in Paraview, then promote the iteration you like (usually the last one):
 
@@ -359,7 +372,7 @@ This writes `obj_nm/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj`
 
 ```bash
 # write it to the project root, NOT tomograms/, so the pipeline's *.mrc glob won't pick it up
-mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_ts_002_dec.mrc
+mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_ts_002_dec.mrc
 ```
 
 **Launch Surforama** with the tomogram and the mesh:

@@ -1,0 +1,48 @@
+site_name: Surface Morphometrics in 2 Hours
+site_url: https://baradlab.com/morphometrics_2hr
+site_author: baradlab
+site_description: >-
+  A condensed, single-page Surface Morphometrics tutorial: from a pre-made
+  IMM/OMM cryo-ET segmentation to quantified membrane ultrastructure in ~2 hours.
+repo_name: baradlab/morphometrics_2hr
+repo_url: https://github.com/baradlab/morphometrics_2hr
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 baradlab
+
+nav:
+  - Tutorial: index.md
+
+theme:
+  icon:
+    logo: material/cube-outline
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: slate)"
+      scheme: slate
+      primary: blue
+      accent: blue
+  features:
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - content.tabs.link
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+
+plugins:
+  - search

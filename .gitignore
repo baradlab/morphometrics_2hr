@@ -1,0 +1,5 @@
+site/
+.venv-docs/
+morpho_run/
+__pycache__/
+.DS_Store

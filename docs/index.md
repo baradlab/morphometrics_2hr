@@ -40,6 +40,13 @@ morphometrics --help                        # should list the pipeline subcomman
 
 On older Ubuntu (or if `graph-tool` fails to solve), use `conda env create -f environment-ubuntu.yml` instead. There is also a Docker image — see the [repo README](https://github.com/baradlab/surface_morphometrics#installation).
 
+!!! note "WSL users: fix git SSL first"
+    On Windows Subsystem for Linux, `git clone` over HTTPS can fail with SSL certificate errors. Point git at the Windows certificate store once, before cloning:
+
+    ```bash
+    git config --global http.sslbackend schannel
+    ```
+
 ### Surforama (recommended, for the last step)
 
 Surforama is a [napari](https://napari.org/) plugin; install it into its own environment:

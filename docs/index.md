@@ -287,13 +287,13 @@ The quantified surfaces are also a ruler for **particles**. Given a STAR file of
 !!! note "Command name"
     The tool is `generate_patches` — it can also carve out membrane patches around each particle and matched random controls, but today we only want the distance annotation, so we turn the patch/control machinery off.
 
-Add a `patch_analysis` block to your `config.yml`. The particle coordinate settings already match this STAR (`rlnCoordinateX/Y/Z` in pixels, `rlnPixelSize` = 3.33 Å/px), so the two keys that matter today are `annotate_star: true` and `generate_random: false`:
+Time to edit the `patch_analysis` block to your `config.yml`. The particle coordinate settings already match this STAR (`rlnCoordinateX/Y/Z` in pixels, `rlnPixelSize` = 3.33 Å/px), so the two keys that matter today are `annotate_star: true` and `generate_random: false`:
 
 ```yaml
 patch_analysis:
   membrane_label: OMM                    # measure ribosome distance to the outer membrane
   annotate_star: true                    # write mesh_distance back into the STAR
-  generate_random: false                 # no random control patches today
+  generate_random: true                  # no random control patches today
   particle_max_distance: null            # keep every particle; we just want distances
   star_dir: "./star/"                    # where the STAR lives
   star_pattern: "clean_ribosomes.star"   # our file isn't named <tomogram>.star, so give it literally
@@ -307,6 +307,7 @@ Then run:
 
 ```bash
 morphometrics generate_patches config.yml
+morphometrics patch_statistics config.yml
 ```
 
 It picks up the OMM graph from Step 3/4 and writes an annotated STAR to the output folder:

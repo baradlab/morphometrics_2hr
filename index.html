@@ -978,11 +978,11 @@ morphometrics<span class="w"> </span>hist2d<span class="w"> </span>morphometrics
 <p class="admonition-title">Command name</p>
 <p>The tool is <code>generate_patches</code> — it can also carve out membrane patches around each particle and matched random controls, but today we only want the distance annotation, so we turn the patch/control machinery off.</p>
 </div>
-<p>Add a <code>patch_analysis</code> block to your <code>config.yml</code>. The particle coordinate settings already match this STAR (<code>rlnCoordinateX/Y/Z</code> in pixels, <code>rlnPixelSize</code> = 3.33 Å/px), so the two keys that matter today are <code>annotate_star: true</code> and <code>generate_random: false</code>:</p>
+<p>Time to edit the <code>patch_analysis</code> block to your <code>config.yml</code>. The particle coordinate settings already match this STAR (<code>rlnCoordinateX/Y/Z</code> in pixels, <code>rlnPixelSize</code> = 3.33 Å/px), so the two keys that matter today are <code>annotate_star: true</code> and <code>generate_random: false</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">patch_analysis</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">membrane_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMM</span><span class="w">                    </span><span class="c1"># measure ribosome distance to the outer membrane</span>
 <span class="w">  </span><span class="nt">annotate_star</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                    </span><span class="c1"># write mesh_distance back into the STAR</span>
-<span class="w">  </span><span class="nt">generate_random</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                 </span><span class="c1"># no random control patches today</span>
+<span class="w">  </span><span class="nt">generate_random</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                  </span><span class="c1"># no random control patches today</span>
 <span class="w">  </span><span class="nt">particle_max_distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">            </span><span class="c1"># keep every particle; we just want distances</span>
 <span class="w">  </span><span class="nt">star_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./star/&quot;</span><span class="w">                    </span><span class="c1"># where the STAR lives</span>
 <span class="w">  </span><span class="nt">star_pattern</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;clean_ribosomes.star&quot;</span><span class="w">   </span><span class="c1"># our file isn&#39;t named &lt;tomogram&gt;.star, so give it literally</span>
@@ -993,6 +993,7 @@ morphometrics<span class="w"> </span>hist2d<span class="w"> </span>morphometrics
 </code></pre></div>
 <p>Then run:</p>
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>generate_patches<span class="w"> </span>config.yml
+morphometrics<span class="w"> </span>patch_statistics<span class="w"> </span>config.yml
 </code></pre></div>
 <p>It picks up the OMM graph from Step 3/4 and writes an annotated STAR to the output folder:</p>
 <div class="highlight"><pre><span></span><code>morphometrics/clean_ribosomes_OMM_meshannotated.star

@@ -169,6 +169,12 @@ mesh_refinement:                # SHORTENED for today: 2 iterations total
 ```
 If your computer has fewer than 8 cores, reduce accordingly. 
 
+Confirm your base settings are finding everything properly by running:
+
+```
+morphometrics validate config.yml
+```
+
 !!! tip "Why these refinement settings"
     The full pipeline usually runs 6 iterations (the first few cross-correlation, the rest dual-Gaussian). Refinement is by far the slowest step because it re-runs pycurv internally each iteration. Setting `iterations: 2` with `xcorr_iterations: [1]` gives you exactly **one cross-correlation pass** (fast, locally sharpens the bilayer) followed by **one dual-Gaussian pass** (precise global centering) — enough to see the method work without the long wait. `convergence_threshold: 0` forces both iterations to run even if the mesh barely moves.
 

@@ -907,6 +907,9 @@ morphometrics<span class="w"> </span>new_config<span class="w">              </s
 <span class="w">  </span><span class="nt">convergence_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">      </span><span class="c1"># 0 = never stop early, so both iterations run</span>
 </code></pre></div>
 If your computer has fewer than 8 cores, reduce accordingly. </p>
+<p>Confirm your base settings are finding everything properly by running:</p>
+<div class="highlight"><pre><span></span><code>morphometrics validate config.yml
+</code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Why these refinement settings</p>
 <p>The full pipeline usually runs 6 iterations (the first few cross-correlation, the rest dual-Gaussian). Refinement is by far the slowest step because it re-runs pycurv internally each iteration. Setting <code>iterations: 2</code> with <code>xcorr_iterations: [1]</code> gives you exactly <strong>one cross-correlation pass</strong> (fast, locally sharpens the bilayer) followed by <strong>one dual-Gaussian pass</strong> (precise global centering) — enough to see the method work without the long wait. <code>convergence_threshold: 0</code> forces both iterations to run even if the mesh barely moves.</p>
